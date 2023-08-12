@@ -1,8 +1,7 @@
-import {useContext} from 'react'
-import AppContext from '../context'
+import useAppContext from '../context'
 
 const Meals = () => {
-  const context = useContext(AppContext)
+  const context = useAppContext()
 
   console.log(context)
 
