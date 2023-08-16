@@ -9,6 +9,18 @@ const useAppContext = () => {
 const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
 const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
 
+const getFavoritesFromLocalStaorage = () => {
+  let favorites = localStorage.getItem('favorites');
+
+  if(favorites) {
+    favorites = JSON.parse(localStorage.getItem('favorites'))
+  } else {
+    favorites = []
+  }
+
+  return favorites
+}
+
 export const AppProvider = ({children}) => {
 
   const [meals, setMeals] = useState([])
