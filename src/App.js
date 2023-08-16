@@ -6,13 +6,26 @@ import Search from './components/Search'
 
 import useAppContext from './context'
 
+const getFavoritesFromLocalStaorage = () => {
+  let favorites = localStorage.getItem('favorites');
+
+  if(favorites) {
+    favorites = JSON.parse(localStorage.getItem('favorites'))
+  } else {
+    favorites = []
+  }
+
+  return favorites
+}
+
+
 function App() {
-  const {showModal} = useAppContext()
+  const {showModal, favorites} = useAppContext()
 
   return (
     <main>
       <Search />
-      {/*<Favorites />*/}
+      {favorites.length > 0 && <Favorites />}
       <Meals />
       {showModal && <Modal />}
     </main>

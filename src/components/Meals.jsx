@@ -2,7 +2,7 @@ import useAppContext from '../context'
 import {FaRegThumbsUp} from 'react-icons/fa'
 
 const Meals = () => {
-  const {loading, meals, selectMeal} = useAppContext()
+  const {loading, meals, selectMeal, addToFavorites, removeFavorites} = useAppContext()
 
   if (loading) {
     return <section className='section'>
@@ -25,7 +25,7 @@ const Meals = () => {
             <img src={image} className='img' onClick={() => selectMeal(id)}/>
             <footer>
               <h5>{title}</h5>
-              <button className='like-btn'><FaRegThumbsUp /></button>
+              <button className='like-btn' onClick={() => addToFavorites(id)}><FaRegThumbsUp /></button>
             </footer>
           </article>
         )
