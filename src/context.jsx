@@ -7,12 +7,13 @@ const useAppContext = () => {
   return useContext(AppContext)
 }
 const allMealsUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
-const randomMealUrl = 'www.themealdb.com/api/json/v1/1/random.php'
+const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
 
 export const AppProvider = ({children}) => {
 
   const [meals, setMeals] = useState([])
   const [loading, setLoading] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
  
   const fetchMeals = async (url) => {
     setLoading(true)
@@ -32,13 +33,27 @@ export const AppProvider = ({children}) => {
     setLoading(false)
   }
 
+  const fetchRandomMeal = async () => {
+    setLoading(true)
+    try {
+     fetchMeals(randomMealUrl)
+    } catch (error) {
+      console.log(error)
+    }
+    setLoading(false)
+  }
 
   useEffect(() => {
     fetchMeals(allMealsUrl)
-
   }, [])
 
-  return <AppContext.Provider value={{loading, meals}}>
+  useEffect(() => {
+    if(!searchTerm) {
+      fetchMeals(`${allMealsUrl}${searchTerm}`)
+    }
+  }, [searchTerm])
+
+  return <AppContext.Provider value={{loading, meals, setSearchTerm, fetchRandomMeal}}>
     {children}
   </AppContext.Provider>
 }
